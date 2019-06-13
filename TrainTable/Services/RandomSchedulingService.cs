@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TrainTable.Contract;
+using TrainTable.Utils;
 using TrainTable.Validators;
 
 namespace TrainTable.Services
@@ -17,6 +18,8 @@ namespace TrainTable.Services
 
         public ScheduleResponse Schedule(List<Train> trains, List<Driver> drivers)
         {
+            var trainType = trains.ToDictionary(t => t.Id, t => t.Type);
+
             var assignments = trains
                 .SelectMany(t => t.Runs.Select(r => new Assignment { TrainId = t.Id, Range = r }))
                 .OrderBy(a => a.Range.ExactFrom)
@@ -36,9 +39,12 @@ namespace TrainTable.Services
             foreach (var a in assignments)
             {
                 var assigned = false;
-                Shuffle(random, drivers);
+                drivers.Shuffle(random);
                 foreach (var driver in drivers)
                 {
+                    if (!driver.AllowedTrainTypes.Contains(trainType[a.TrainId]))
+                        continue;
+
                     driver.Assignments.Add(a);
                     if (IsValid(drivers))
                     {
@@ -62,37 +68,15 @@ namespace TrainTable.Services
             };
         }
 
-        private void Shuffle<T>(Random random, List<T> items)
-        {
-            for (int i = 0; i < items.Count; i++)
-            {
-                var swap = random.Next(i + 1);
-                var x = items[i];
-                items[i] = items[swap];
-                items[swap] = x;
-            }
-        }
-
         private bool IsValid(List<Driver> drivers)
         {
-            return !DoesThrow<ValidationException>(() => _checker.Check(new ScheduleResponse
+            Action check = () => _checker.Check(new ScheduleResponse
             {
                 Drivers = drivers,
                 Unassigned = new List<Assignment>(),
-            }));
-        }
+            });
 
-        private bool DoesThrow<T>(Action action) where T : Exception
-        {
-            try
-            {
-                action();
-                return false;
-            }
-            catch (T)
-            {
-                return true;
-            }
+            return !check.Throws<ValidationException>();
         }
     }
 }
