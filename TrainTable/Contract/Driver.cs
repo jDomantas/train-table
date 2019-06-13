@@ -5,6 +5,6 @@ namespace TrainTable.Contract
     public class Driver
     {
         public string Name;
-        public List<Assignment> Assignments; 
+        public List<Assignment> Assignments;
     }
 }
