@@ -1,11 +1,16 @@
-﻿using NodaTime;
+﻿using Newtonsoft.Json;
+using NodaTime;
 
 namespace TrainTable.Contract
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class DateRange
     {
+        [JsonProperty]
         public LocalDate Day;
+        [JsonProperty]
         public LocalTime From;
+        [JsonProperty]
         public LocalTime To;
 
         public LocalDateTime ExactFrom => Day + From;

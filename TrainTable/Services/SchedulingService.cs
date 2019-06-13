@@ -10,7 +10,7 @@ namespace TrainTable.Services
     {
         public ScheduleResponse GenerateSchedule(List<Train> trains, List<Driver> drivers)
         {
-
+            return null;
         }
     }
 }
