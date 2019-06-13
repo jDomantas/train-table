@@ -22,7 +22,7 @@ namespace TrainTable.Services
             var trainType = trains.ToDictionary(t => t.Id, t => t.Type);
 
             var assignments = trains
-                .SelectMany(t => t.Runs.Select(r => new Assignment { TrainId = t.Id, Range = r }))
+                .SelectMany(t => t.Runs.Select(r => new Assignment { TrainId = t.Id, Range = r, TrainType = t.Type }))
                 .OrderBy(a => a.Range.ExactFrom)
                 .ToList();
 
