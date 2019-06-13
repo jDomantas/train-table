@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NodaTime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TrainTable.Contract;
@@ -7,11 +8,11 @@ using TrainTable.Validators;
 
 namespace TrainTable.Services
 {
-    public class RandomSchedulingService : ISchedulingService
+    public class PrioritizingSchedulingService : ISchedulingService
     {
         private readonly IChecker _checker;
 
-        public RandomSchedulingService(IChecker checker)
+        public PrioritizingSchedulingService(IChecker checker)
         {
             _checker = checker;
         }
@@ -39,7 +40,7 @@ namespace TrainTable.Services
             foreach (var a in assignments)
             {
                 var assigned = false;
-                drivers.Shuffle(random);
+                drivers = OrderByPriority(drivers);
                 foreach (var driver in drivers)
                 {
                     if (!driver.AllowedTrainTypes.Contains(trainType[a.TrainId]))
@@ -66,6 +67,21 @@ namespace TrainTable.Services
                 Drivers = drivers,
                 Unassigned = unassigned,
             };
+        }
+
+        private List<Driver> OrderByPriority(List<Driver> drivers)
+        {
+            var totalTime = drivers.Aggregate(Duration.Zero, (a, b) => a + b.TotalWorkTime);
+            var totalNightTime = drivers.Aggregate(Duration.Zero, (a, b) => a + b.TimeInNightShift);
+
+            if (totalTime == Duration.Zero)
+                return drivers;
+
+            var scale = totalNightTime.Minutes / (double)totalTime.Minutes;
+
+            return drivers
+                .OrderBy(d => d.TotalWorkTime.Minutes + d.TimeInNightShift.Minutes / scale)
+                .ToList();
         }
 
         private bool IsValid(List<Driver> drivers)

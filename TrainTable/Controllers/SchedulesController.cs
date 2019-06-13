@@ -9,26 +9,39 @@ namespace TrainTable.Controllers
     [Route("api/schedules")]
     public class SchedulesController : Controller
     {
-        private readonly ISchedulingService _schedulingService;
+        private readonly RandomSchedulingService _randomSchedulingService;
+        private readonly PrioritizingSchedulingService _prioritizingSchedulingService;
         private readonly IRepository<Driver> _driverRepository;
         private readonly IRepository<Train> _trainRepository;
 
         public SchedulesController(
-            ISchedulingService schedulingService,
+            RandomSchedulingService randomSchedulingService,
+            PrioritizingSchedulingService prioritizingSchedulingService,
             IRepository<Driver> driverRepository,
             IRepository<Train> trainRepository)
         {
-            _schedulingService = schedulingService;
+            _randomSchedulingService = randomSchedulingService;
+            _prioritizingSchedulingService = prioritizingSchedulingService;
             _driverRepository = driverRepository;
             _trainRepository = trainRepository;
         }
 
         [HttpGet]
-        public ScheduleResponse Get()
+        [Route("random")]
+        public ScheduleResponse GetRandom()
         {
             var trains = _trainRepository.GetAll().ToList();
             var drivers = _driverRepository.GetAll().ToList();
-            return _schedulingService.Schedule(trains, drivers);
+            return _randomSchedulingService.Schedule(trains, drivers);
+        }
+
+        [HttpGet]
+        [Route("prioritized")]
+        public ScheduleResponse GetPrioritized()
+        {
+            var trains = _trainRepository.GetAll().ToList();
+            var drivers = _driverRepository.GetAll().ToList();
+            return _prioritizingSchedulingService.Schedule(trains, drivers);
         }
     }
 }

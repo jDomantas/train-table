@@ -50,7 +50,8 @@ namespace TrainTable
             var checker = new CompositeChecker(sp.GetService<IEnumerable<IChecker>>());
             services.AddSingleton<IChecker>(checker);
 
-            services.AddSingleton<ISchedulingService, RandomSchedulingService>();
+            services.AddSingleton<RandomSchedulingService>();
+            services.AddSingleton<PrioritizingSchedulingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
