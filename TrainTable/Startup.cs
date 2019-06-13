@@ -36,8 +36,8 @@ namespace TrainTable
                 .MinimumLevel.Debug()
                 .CreateLogger();
 
-            services.AddSingleton<IRepository<Driver>, EmptyRepository<Driver>>();
-            services.AddSingleton<IRepository<Train>, EmptyRepository<Train>>();
+            services.AddSingleton<IRepository<Driver>, HardcodedDriverRepository>();
+            services.AddSingleton<IRepository<Train>, HardcodedTrainRepository>();
 
             services.AddSingleton<IChecker, AtLeastTwelveHoursOfRestBetweenShifts>();
             services.AddSingleton<IChecker, NoAssignmentsCollideChecker>();
