@@ -6,5 +6,6 @@ namespace TrainTable.Contract
     {
         public string Name;
         public List<Assignment> Assignments;
+        public HashSet<TrainType> AllowedTrainTypes;
     }
 }

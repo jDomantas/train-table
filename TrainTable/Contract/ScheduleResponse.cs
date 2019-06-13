@@ -2,7 +2,7 @@
 
 namespace TrainTable.Contract
 {
-    public class TimetableResponse
+    public class ScheduleResponse
     {
         public List<Driver> Drivers;
     }
