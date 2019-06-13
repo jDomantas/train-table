@@ -17,6 +17,8 @@ namespace TrainTable.Services
 
         public ScheduleResponse Schedule(List<Train> trains, List<Driver> drivers)
         {
+            var trainType = trains.ToDictionary(t => t.Id, t => t.Type);
+
             var assignments = trains
                 .SelectMany(t => t.Runs.Select(r => new Assignment { TrainId = t.Id, Range = r }))
                 .OrderBy(a => a.Range.ExactFrom)
@@ -39,6 +41,9 @@ namespace TrainTable.Services
                 Shuffle(random, drivers);
                 foreach (var driver in drivers)
                 {
+                    if (!driver.AllowedTrainTypes.Contains(trainType[a.TrainId]))
+                        continue;
+
                     driver.Assignments.Add(a);
                     if (IsValid(drivers))
                     {
