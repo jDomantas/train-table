@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using NodaTime;
 using NodaTime.Serialization.JsonNet;
 using Serilog;
+using System.Collections.Generic;
+using TrainTable.Contract;
+using TrainTable.Repositories;
+using TrainTable.Services;
+using TrainTable.Validators;
 
 namespace TrainTable
 {
@@ -26,12 +25,32 @@ namespace TrainTable
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddJsonOptions(opt => opt.SerializerSettings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
+            services
+                .AddMvc()
+                .AddJsonOptions(opt => opt
+                    .SerializerSettings
+                    .ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
 
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
                 .MinimumLevel.Debug()
                 .CreateLogger();
+
+            services.AddSingleton<IRepository<Driver>, EmptyRepository<Driver>>();
+            services.AddSingleton<IRepository<Train>, EmptyRepository<Train>>();
+
+            services.AddSingleton<IChecker, AtLeastTwelveHoursOfRestBetweenShifts>();
+            services.AddSingleton<IChecker, NoAssignmentsCollideChecker>();
+            services.AddSingleton<IChecker, NoMoreThanFortyEightHoursInSevenDaysChecker>();
+            services.AddSingleton<IChecker, NoMoreThanSixDaysPerWeekChecker>();
+            services.AddSingleton<IChecker, NoMoreThanTwoNightShiftsInARowChecker>();
+            services.AddSingleton<IChecker, ThirtyFiveConescutiveHoursOfRestPerWeekChecker>();
+
+            var sp = services.BuildServiceProvider();
+            var checker = new CompositeChecker(sp.GetService<IEnumerable<IChecker>>());
+            services.AddSingleton<IChecker>(checker);
+
+            services.AddSingleton<ISchedulingService, RandomSchedulingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

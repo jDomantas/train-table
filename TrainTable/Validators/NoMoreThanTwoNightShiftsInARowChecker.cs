@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using TrainTable.Contract;
+﻿using TrainTable.Contract;
 
 namespace TrainTable.Validators
 {

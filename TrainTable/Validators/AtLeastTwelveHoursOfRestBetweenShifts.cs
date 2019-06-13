@@ -1,5 +1,4 @@
 ﻿using NodaTime;
-using System;
 using TrainTable.Contract;
 
 namespace TrainTable.Validators

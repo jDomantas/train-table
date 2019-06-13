@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TrainTable.Contract
+﻿namespace TrainTable.Contract
 {
     public class Assignment
     {
