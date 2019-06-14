@@ -17,9 +17,9 @@ namespace TrainTable.Repositories
                     Id = "D911 Turmantas - Vilnius", // Same time every day
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
-                        "3-0430-0633",
-                        "4-0430-0633",
-                        "5-0430-0633"
+                        "13-0430-0633",
+                        "14-0430-0633",
+                        "15-0430-0633"
                     )
                 },
                 new Train()
@@ -27,9 +27,9 @@ namespace TrainTable.Repositories
                     Id = "M659 Kena - Vilnius",
                     Type = TrainType.Electric,
                     Runs = ParseAll(
-                        "3-1405-1441",
-                        "4-1405-1441",
-                        "5-1405-1441"
+                        "13-1405-1441",
+                        "14-1405-1441",
+                        "15-1405-1441"
                     )
                 },
                 new Train()
@@ -37,8 +37,8 @@ namespace TrainTable.Repositories
                     Id = "M967 Vilnius - Oro uostas",
                     Type = TrainType.Electric,
                     Runs = ParseAll(
-                        "3-1240-1247",
-                        "4-1240-1247"
+                        "13-1240-1247",
+                        "14-1240-1247"
                     )
                 },
                 new Train()
@@ -46,9 +46,9 @@ namespace TrainTable.Repositories
                     Id = "D646 Marcinkonys - Vilnius",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
-                        "3-0809-1005",
-                        "4-1955-2127",
-                        "5-1739-1908"
+                        "13-0809-1005",
+                        "14-1955-2127",
+                        "15-1739-1908"
                     )
                 },
                 new Train() // Has runs only on a single day
@@ -56,7 +56,7 @@ namespace TrainTable.Repositories
                     Id = "D692 Kybartai - Kaunas",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
-                        "4-1002-1129"
+                        "14-1002-1129"
                     )
                 },
                 new Train() // Has only night runs
@@ -64,7 +64,7 @@ namespace TrainTable.Repositories
                     Id = "M657 Kena - Vilnius",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
-                        "3-0524-0600"
+                        "13-0524-0600"
                     )
                 },
                 new Train() // Has no night runs
@@ -72,9 +72,9 @@ namespace TrainTable.Repositories
                     Id = "G22T Šiauliai - Vilnius",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
-                          "3-0800-1043",
-                          "4-0800-1043",
-                          "5-0800-1043"
+                          "13-0800-1043",
+                          "14-0800-1043",
+                          "15-0800-1043"
                     )
                 }
             };
