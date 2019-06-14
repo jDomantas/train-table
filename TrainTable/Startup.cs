@@ -40,7 +40,7 @@ namespace TrainTable
             services.AddSingleton<IRepository<Driver>, HardcodedDriverRepository>();
             services.AddSingleton<IRepository<Train>, HardcodedTrainRepository>();
 
-            services.AddSingleton<IEvaluator, DispersionEvaluator>();
+            services.AddSingleton<IEvaluator, StandardDeviationEvaluator>();
 
             services.AddSingleton<IChecker, AtLeastTwelveHoursOfRestBetweenShifts>();
             services.AddSingleton<IChecker, NoAssignmentsCollideChecker>();

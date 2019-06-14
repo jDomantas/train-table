@@ -17,10 +17,10 @@ namespace TrainTable.Utils
             }
         }
 
-        public static double Dispersion(this IEnumerable<double> items)
+        public static double StandardDeviation(this IEnumerable<double> items)
         {
             var avg = items.Average();
-            return items.Select(i => avg - i).Select(i => i * i).Sum();
+            return Math.Sqrt(items.Select(i => avg - i).Select(i => i * i).Sum() / (items.Count() - 1));
         }
     }
 }
