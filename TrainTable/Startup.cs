@@ -67,6 +67,7 @@ namespace TrainTable
             }
 
             app.UseMvc();
+            app.UseStaticFiles();
         }
     }
 }
