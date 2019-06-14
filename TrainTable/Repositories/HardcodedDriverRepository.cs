@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TrainTable.Contract;
-
 namespace TrainTable.Repositories
 {
     public class HardcodedDriverRepository : IRepository<Driver>
@@ -11,7 +10,7 @@ namespace TrainTable.Repositories
             {
                 new Driver()
                 {
-                    Name = "Driver 1",
+                    Name = "Edgaras U. - 6148",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Electric
@@ -19,7 +18,7 @@ namespace TrainTable.Repositories
                 },
                 new Driver()
                 {
-                    Name = "Driver 2",
+                    Name = "Tomas J. - 6215",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Diesel
@@ -27,7 +26,7 @@ namespace TrainTable.Repositories
                 },
                 new Driver()
                 {
-                    Name = "Driver 3",
+                    Name = "Nida S - 6149",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Diesel,
@@ -36,7 +35,7 @@ namespace TrainTable.Repositories
                 },
                 new Driver()
                 {
-                    Name = "Driver 4",
+                    Name = "Gintarė M. - 6176",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Electric
@@ -44,7 +43,7 @@ namespace TrainTable.Repositories
                 },
                 new Driver()
                 {
-                    Name = "Driver 5",
+                    Name = "Jolanta D. - 6205",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Electric,
@@ -53,7 +52,7 @@ namespace TrainTable.Repositories
                 },
                 new Driver()
                 {
-                    Name = "Driver 6",
+                    Name = "Rima V. - 6159",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Electric
@@ -61,7 +60,7 @@ namespace TrainTable.Repositories
                 },
                 new Driver()
                 {
-                    Name = "Driver 7",
+                    Name = "Vasiliy K. - 8704",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Electric,
@@ -70,7 +69,16 @@ namespace TrainTable.Repositories
                 },
                 new Driver()
                 {
-                    Name = "Driver 8",
+                    Name = "Simas T. - 6219",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Electric,
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Marius M. - 6162",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Diesel
@@ -78,7 +86,88 @@ namespace TrainTable.Repositories
                 },
                 new Driver()
                 {
-                    Name = "Driver 9",
+                    Name = "Toma M. - 8771",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Edgars D. - 6179",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Electric,
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Thommas M. - 6163",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Viktorija Č. - 6203",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Nijolė A. - 6193",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Thommas M. - 6213",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Agnė V. - 6164",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Electric
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Gregorijus A. - 6181",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Electric
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Linas V. - 6174",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Karolis D. - 6178",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Electric
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Mantas M. - 2369",
                     AllowedTrainTypes = new HashSet<TrainType>()
                     {
                         TrainType.Diesel
