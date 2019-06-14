@@ -38,7 +38,7 @@ namespace TrainTable.Repositories
                         "15-1900-2330",
                         "16-0100-0500",
                         "16-0600-1200",
-                        "17-0100-2300", // this mofo too long
+                        //"17-0100-2300", // this mofo too long
                         "19-0130-0630",
                         "19-1500-1800"
                     )
