@@ -26,6 +26,9 @@ namespace TrainTable.Services
                 .OrderBy(a => a.Range.ExactFrom)
                 .ToList();
 
+            var totalTime = assignments.Aggregate(Duration.Zero, (a, b) => a + b.Range.Duration);
+            var totalNightTime = assignments.Aggregate(Duration.Zero, (a, b) => a + b.Range.TimeInNightShift);
+
             drivers = drivers.Select(d => new Driver
             {
                 AllowedTrainTypes = d.AllowedTrainTypes,
@@ -40,7 +43,7 @@ namespace TrainTable.Services
             foreach (var a in assignments)
             {
                 var assigned = false;
-                drivers = OrderByPriority(drivers);
+                drivers = OrderByPriority(drivers, totalTime, totalNightTime);
                 foreach (var driver in drivers)
                 {
                     if (!driver.AllowedTrainTypes.Contains(trainType[a.TrainId]))
@@ -69,11 +72,8 @@ namespace TrainTable.Services
             };
         }
 
-        private List<Driver> OrderByPriority(List<Driver> drivers)
+        private List<Driver> OrderByPriority(List<Driver> drivers, Duration totalTime, Duration totalNightTime)
         {
-            var totalTime = drivers.Aggregate(Duration.Zero, (a, b) => a + b.TotalWorkTime);
-            var totalNightTime = drivers.Aggregate(Duration.Zero, (a, b) => a + b.TimeInNightShift);
-
             if (totalTime == Duration.Zero)
                 return drivers;
 
