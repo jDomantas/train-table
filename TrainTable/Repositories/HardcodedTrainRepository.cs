@@ -14,7 +14,7 @@ namespace TrainTable.Repositories
             {
                 new Train() // Random runs
                 {
-                    Id = "T1",
+                    Id = "D911 Turmantas - Vilnius",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
                         "14-1300-1630",
@@ -26,7 +26,7 @@ namespace TrainTable.Repositories
                 },
                 new Train() // Random runs
                 {
-                    Id = "T2",
+                    Id = "M659 Kena - Vilnius",
                     Type = TrainType.Electric,
                     Runs = ParseAll(
                         "14-0900-1000",
@@ -45,7 +45,7 @@ namespace TrainTable.Repositories
                 },
                 new Train() // Random runs
                 {
-                    Id = "T3",
+                    Id = "M967 Vilnius - Oro uostas",
                     Type = TrainType.Electric,
                     Runs = ParseAll(
                         "19-0200-1030",
@@ -58,7 +58,7 @@ namespace TrainTable.Repositories
                 },
                 new Train() // Same time every day
                 {
-                    Id = "T4",
+                    Id = "D646 Marcinkonys - Vilnius",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
                         "14-1530-2230",
@@ -73,7 +73,7 @@ namespace TrainTable.Repositories
                 },
                 new Train() // Has runs only on a single day
                 {
-                    Id = "T5",
+                    Id = "D692 Kybartai - Kaunas",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
                         "22-0100-0400",
@@ -85,7 +85,7 @@ namespace TrainTable.Repositories
                 },
                 new Train() // Has only night runs
                 {
-                    Id = "T6",
+                    Id = "M657 Kena - Vilnius",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
                         "14-0300-0600",
@@ -103,7 +103,7 @@ namespace TrainTable.Repositories
                 },
                 new Train() // Has no night runs
                 {
-                    Id = "T7",
+                    Id = "G22T Šiauliai - Vilnius",
                     Type = TrainType.Diesel,
                     Runs = ParseAll(
                           "15-0600-0800",
