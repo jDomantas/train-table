@@ -3,26 +3,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TrainTable.Contract;
+using TrainTable.Repositories;
 using TrainTable.Utils;
 using TrainTable.Validators;
 
 namespace TrainTable.Services
 {
-    public class PrioritizingSchedulingService : ISchedulingService
+    public class PrioritizingSchedulingService : AbstractSchedulingService
     {
         private readonly IChecker _checker;
 
-        public PrioritizingSchedulingService(IChecker checker)
+        public PrioritizingSchedulingService(IRepository<Driver> driverRepository, IRepository<Train> trainRepostory, IChecker checker)
+            : base(driverRepository, trainRepostory)
         {
             _checker = checker;
         }
 
-        public ScheduleResponse Schedule(List<Train> trains, List<Driver> drivers)
+        public override ScheduleResponse GenerateSchedule()
         {
+            var trains = trainRepository.GetAll().ToList();
+            var drivers = driverRepository.GetAll().ToList();
+            
             var trainType = trains.ToDictionary(t => t.Id, t => t.Type);
 
             var assignments = trains
-                .SelectMany(t => t.Runs.Select(r => new Assignment { TrainId = t.Id, Range = r, TrainType = t.Type }))
+                .SelectMany(t => t.Runs.Select(r => new Assignment {Id = Assignment.NextId(), TrainId = t.Id, Range = r, TrainType = t.Type }))
                 .OrderBy(a => a.Range.ExactFrom)
                 .ToList();
 
