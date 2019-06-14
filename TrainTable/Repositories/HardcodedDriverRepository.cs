@@ -58,6 +58,31 @@ namespace TrainTable.Repositories
                     {
                         TrainType.Electric
                     }
+                },
+                new Driver()
+                {
+                    Name = "Driver 7",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Electric,
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Driver 8",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Diesel
+                    }
+                },
+                new Driver()
+                {
+                    Name = "Driver 9",
+                    AllowedTrainTypes = new HashSet<TrainType>()
+                    {
+                        TrainType.Diesel
+                    }
                 }
             };
         }
