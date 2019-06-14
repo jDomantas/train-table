@@ -48,6 +48,7 @@ namespace TrainTable
             services.AddSingleton<IChecker, NoMoreThanSixDaysPerWeekChecker>();
             services.AddSingleton<IChecker, NoMoreThanTwoNightShiftsInARowChecker>();
             services.AddSingleton<IChecker, ThirtyFiveConescutiveHoursOfRestPerWeekChecker>();
+            services.AddSingleton<IChecker, AtMostTwelveHoursOfWorkInOneDayChecker>();
 
             var sp = services.BuildServiceProvider();
             var checker = new CompositeChecker(sp.GetService<IEnumerable<IChecker>>());
