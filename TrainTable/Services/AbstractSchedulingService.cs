@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using TrainTable.Utils;
 using TrainTable.Validators;
+using System.Collections.Generic;
 
 namespace TrainTable.Services
 {
@@ -97,6 +98,39 @@ namespace TrainTable.Services
                 _schedule = originalSchedule;
                 throw e;
             }
+        }
+
+        public List<Driver> GetFreeDrivers(DateRange range)
+        {
+            return GetSchedule()
+                .Drivers
+                .Where(d =>
+                {
+                    var schedule = GetSchedule().DeepClone();
+                    var driver = schedule
+                        .Drivers
+                        .Where(dd => dd.Name == d.Name)
+                        .FirstOrDefault();
+                    if (driver == null) return false; // ???
+                    if (driver.Assignments.Any(a => a.Range.Intersects(range))) return false;
+                    driver.Assignments.Add(new Assignment
+                    {
+                        Range = range,
+                        TrainId = "temp",
+                        TrainType = TrainType.Electric
+                    });
+                    driver.Assignments = driver.Assignments.OrderBy(a => a.Range.ExactFrom).ToList();
+                    try
+                    {
+                        checker.Check(schedule);
+                        return true;
+                    }
+                    catch(ValidationException)
+                    {
+                        return false;
+                    }
+                })
+                .ToList();
         }
 
         public abstract ScheduleResponse GenerateSchedule();

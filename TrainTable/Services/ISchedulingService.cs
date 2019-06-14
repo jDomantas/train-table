@@ -1,4 +1,5 @@
-﻿using TrainTable.Contract;
+﻿using System.Collections.Generic;
+using TrainTable.Contract;
 
 namespace TrainTable.Services
 {
@@ -9,5 +10,6 @@ namespace TrainTable.Services
         ScheduleResponse GenerateAndSaveSchedule();
         void DeleteAssignment(string assignmentId);
         void MoveAssignment(string assignmentId, string driverId);
+        List<Driver> GetFreeDrivers(DateRange range);
     }
 }

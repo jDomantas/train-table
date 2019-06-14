@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using System.Collections.Generic;
 using TrainTable.Contract;
 using TrainTable.Evaluators;
 using TrainTable.Services;
@@ -68,6 +69,13 @@ namespace TrainTable.Controllers
             {
                 return StatusCode(409);
             }
+        }
+
+        [HttpPost]
+        [Route("freeDrivers")]
+        public List<Driver> GetFreeDrivers([FromBody] DateRange range)
+        {
+            return _schedulingService.GetFreeDrivers(range);
         }
     }
 }

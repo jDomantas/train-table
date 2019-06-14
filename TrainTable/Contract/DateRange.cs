@@ -22,5 +22,11 @@ namespace TrainTable.Contract
         public Duration TimeInNightShift =>
             (From < new LocalTime(6, 0) ? (new LocalTime(6, 0) - From).ToDuration() : Duration.Zero) +
             (To > new LocalTime(22, 0) ? (To - new LocalTime(22, 0)).ToDuration() : Duration.Zero);
+
+        public bool Intersects(DateRange other)
+        {
+            if (other.ExactTo < ExactFrom || other.ExactFrom > ExactTo) return false;
+            return true;
+        }
     }
 }

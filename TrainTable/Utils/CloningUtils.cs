@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using NodaTime;
+using NodaTime.Serialization.JsonNet;
 
 namespace TrainTable.Utils
 {
@@ -11,7 +13,9 @@ namespace TrainTable.Utils
                 return default(T);
             }
 
-            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(obj));
+            var settings = new JsonSerializerSettings();
+            settings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(obj, settings), settings);
         }
     }
 }
