@@ -2,6 +2,8 @@
 using TrainTable.Repositories;
 using System.Linq;
 using System;
+using TrainTable.Utils;
+using TrainTable.Validators;
 
 namespace TrainTable.Services
 {
@@ -9,12 +11,14 @@ namespace TrainTable.Services
     {
         protected readonly IRepository<Driver> driverRepository;
         protected readonly IRepository<Train> trainRepository;
+        protected readonly IChecker checker;
         private ScheduleResponse _schedule;
 
-        public AbstractSchedulingService(IRepository<Driver> driverRepository, IRepository<Train> trainRepostory)
+        public AbstractSchedulingService(IRepository<Driver> driverRepository, IRepository<Train> trainRepository, IChecker checker)
         {
             this.driverRepository = driverRepository;
-            trainRepository = trainRepostory;
+            this.trainRepository = trainRepository;
+            this.checker = checker;
         }
 
         public ScheduleResponse GenerateAndSaveSchedule()
@@ -33,7 +37,7 @@ namespace TrainTable.Services
 
         public void DeleteAssignment(string assignmentId)
         {
-            var driver = _schedule
+            var driver = GetSchedule()
                 .Drivers
                 .Where(d => d.Assignments.Any(a => a.Id == assignmentId))
                 .FirstOrDefault();
@@ -44,36 +48,55 @@ namespace TrainTable.Services
             _schedule.Unassigned.Add(assignment);
         }
 
-        public void AddAssignment(AddAssignmentRequest request)
+        public void MoveAssignment(string assignmentId, string driverId)
         {
-            var driver = _schedule
+            var driver = GetSchedule()
                 .Drivers
-                .Where(d => d.Name == request.DriverId)
+                .Where(d => d.Name == driverId)
                 .FirstOrDefault();
             if (driver == null)
             {
                 throw new Exception("Driver with the specified ID was not found");
             }
-            var trainType =
-                _schedule.Drivers
+            var assignments =
+                _schedule
+                    .Drivers
                     .SelectMany(d => d.Assignments)
-                    .Concat(_schedule.Unassigned)
-                    .Where(a => a.TrainId == request.TrainId)
-                    .Select(a => (TrainType?)a.TrainType)
-                    .FirstOrDefault();
+                    .Select(a => (a, true))
+                    .Concat(_schedule.Unassigned.Select(a => (a, false)))
+                    .Where(t => t.Item1.Id == assignmentId);
 
-            if (!trainType.HasValue)
+            if (assignments.Count() == 0)
             {
-                throw new Exception("Train with the specified ID was not found");
+                throw new Exception("Assignment with specified ID was not found");
             }
-                    
-            driver.Assignments.Add(new Assignment
+
+            var assignmentTuple = assignments.First();
+            var assignment = assignmentTuple.Item1;
+            var isAssigned = assignmentTuple.Item2;
+
+            var originalSchedule = _schedule.DeepClone();
+            
+            if (isAssigned)
             {
-                Id = Assignment.NextId(),
-                TrainId = request.TrainId,
-                TrainType = trainType.Value,
-                Range = request.Range
-            });
+                _schedule.Drivers.ForEach(d => d.Assignments.Remove(assignment));
+            }
+            else
+            {
+                _schedule.Unassigned.Remove(assignment);
+            }
+            driver.Assignments.Add(assignment);
+
+
+            try
+            {
+                checker.Check(_schedule);
+            }
+            catch (ValidationException e)
+            {
+                _schedule = originalSchedule;
+                throw e;
+            }
         }
 
         public abstract ScheduleResponse GenerateSchedule();

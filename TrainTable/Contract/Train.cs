@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TrainTable.Contract
 {
+    [Serializable]
     public class Train
     {
         public string Id;

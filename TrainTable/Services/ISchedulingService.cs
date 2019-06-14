@@ -8,6 +8,6 @@ namespace TrainTable.Services
         ScheduleResponse GetSchedule();
         ScheduleResponse GenerateAndSaveSchedule();
         void DeleteAssignment(string assignmentId);
-        void AddAssignment(AddAssignmentRequest request);
+        void MoveAssignment(string assignmentId, string driverId);
     }
 }

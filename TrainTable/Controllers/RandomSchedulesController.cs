@@ -3,6 +3,7 @@ using Serilog;
 using TrainTable.Contract;
 using TrainTable.Evaluators;
 using TrainTable.Services;
+using TrainTable.Validators;
 
 namespace TrainTable.Controllers
 {
@@ -52,14 +53,21 @@ namespace TrainTable.Controllers
         }
 
         [HttpPost]
-        [Route("")]
-        public ScheduleResponse AddAssignment([FromBody] AddAssignmentRequest request)
+        [Route("move")]
+        public IActionResult MoveAssignment([FromBody] MoveAssignmentRequest request)
         {
             Log.Information("Adding assignment to random schedule");
-            _schedulingService.AddAssignment(request);
-            var response = _schedulingService.GetSchedule();
-            Log.Information("New schedule score {0}", _evaluator.Evaluate(response));
-            return response;
+            try
+            {
+                _schedulingService.MoveAssignment(request.AssignmentId, request.DriverId);
+                var response = _schedulingService.GetSchedule();
+                Log.Information("New schedule score {0}", _evaluator.Evaluate(response));
+                return Ok(response);
+            }
+            catch (ValidationException)
+            {
+                return StatusCode(409);
+            }
         }
     }
 }

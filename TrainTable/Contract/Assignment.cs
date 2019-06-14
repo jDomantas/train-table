@@ -1,5 +1,8 @@
-﻿namespace TrainTable.Contract
+﻿using System;
+
+namespace TrainTable.Contract
 {
+    [Serializable]
     public class Assignment
     {
         private static int _nextId = 0;

@@ -11,13 +11,9 @@ namespace TrainTable.Services
 {
     public class PrioritizingSchedulingService : AbstractSchedulingService
     {
-        private readonly IChecker _checker;
-
         public PrioritizingSchedulingService(IRepository<Driver> driverRepository, IRepository<Train> trainRepostory, IChecker checker)
-            : base(driverRepository, trainRepostory)
-        {
-            _checker = checker;
-        }
+            : base(driverRepository, trainRepostory, checker)
+        { }
 
         public override ScheduleResponse GenerateSchedule()
         {
@@ -91,7 +87,7 @@ namespace TrainTable.Services
 
         private bool IsValid(List<Driver> drivers)
         {
-            Action check = () => _checker.Check(new ScheduleResponse
+            Action check = () => checker.Check(new ScheduleResponse
             {
                 Drivers = drivers,
                 Unassigned = new List<Assignment>(),

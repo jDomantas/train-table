@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
 using NodaTime;
+using System;
 
 namespace TrainTable.Contract
 {
     [JsonObject(MemberSerialization.OptIn)]
+    [Serializable]
     public class DateRange
     {
         [JsonProperty]
