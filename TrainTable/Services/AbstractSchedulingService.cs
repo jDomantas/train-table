@@ -89,7 +89,7 @@ namespace TrainTable.Services
             driver.Assignments.Add(assignment);
 
 
-            try
+            /*try
             {
                 checker.Check(_schedule);
             }
@@ -97,7 +97,7 @@ namespace TrainTable.Services
             {
                 _schedule = originalSchedule;
                 throw e;
-            }
+            }*/
         }
 
         public List<Driver> GetFreeDrivers(DateRange range)
