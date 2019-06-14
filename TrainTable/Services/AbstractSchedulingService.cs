@@ -38,7 +38,10 @@ namespace TrainTable.Services
                 .Where(d => d.Assignments.Any(a => a.Id == assignmentId))
                 .FirstOrDefault();
             if (driver == null) return;
-            driver.Assignments.RemoveAll(a => a.Id == assignmentId);
+            var assignment = driver.Assignments.Where(a => a.Id == assignmentId).FirstOrDefault();
+            if (assignment == null) return;
+            driver.Assignments.Remove(assignment);
+            _schedule.Unassigned.Add(assignment);
         }
 
         public void AddAssignment(AddAssignmentRequest request)
