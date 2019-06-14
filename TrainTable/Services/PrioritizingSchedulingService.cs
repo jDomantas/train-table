@@ -77,10 +77,10 @@ namespace TrainTable.Services
             if (totalTime == Duration.Zero)
                 return drivers;
 
-            var scale = totalNightTime.Minutes / (double)totalTime.Minutes;
+            var scale = totalNightTime.TotalMinutes / totalTime.TotalMinutes;
 
             return drivers
-                .OrderBy(d => d.TotalWorkTime.Minutes + d.TimeInNightShift.Minutes / scale)
+                .OrderBy(d => d.TotalWorkTime.TotalMinutes + d.TimeInNightShift.TotalMinutes / scale)
                 .ToList();
         }
 

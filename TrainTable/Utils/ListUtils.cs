@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace TrainTable.Utils
 {
@@ -16,6 +15,12 @@ namespace TrainTable.Utils
                 items[swap] = items[i];
                 items[i] = x;
             }
+        }
+
+        public static double Dispersion(this IEnumerable<double> items)
+        {
+            var avg = items.Average();
+            return items.Select(i => avg - i).Select(i => i * i).Sum();
         }
     }
 }

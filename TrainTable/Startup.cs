@@ -7,6 +7,7 @@ using NodaTime.Serialization.JsonNet;
 using Serilog;
 using System.Collections.Generic;
 using TrainTable.Contract;
+using TrainTable.Evaluators;
 using TrainTable.Repositories;
 using TrainTable.Services;
 using TrainTable.Validators;
@@ -38,6 +39,8 @@ namespace TrainTable
 
             services.AddSingleton<IRepository<Driver>, HardcodedDriverRepository>();
             services.AddSingleton<IRepository<Train>, HardcodedTrainRepository>();
+
+            services.AddSingleton<IEvaluator, DispersionEvaluator>();
 
             services.AddSingleton<IChecker, AtLeastTwelveHoursOfRestBetweenShifts>();
             services.AddSingleton<IChecker, NoAssignmentsCollideChecker>();
